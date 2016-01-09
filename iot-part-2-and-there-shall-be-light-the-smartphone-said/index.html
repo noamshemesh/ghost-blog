@@ -1,0 +1,206 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>IoT Part 2 - And There Shall be Light (the smartphone said)</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=052e489564">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+
+    <link rel="canonical" href="http://noamsh.com/iot-part-2-and-there-shall-be-light-the-smartphone-said/">
+    <meta name="referrer" content="origin">
+    
+    <meta property="og:site_name" content="My Life as a Developer">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="IoT Part 2 - And There Shall be Light (the smartphone said)">
+    <meta property="og:description" content="Now, after being able to spy on our dog, I thought, what if I'm not home and the sun went down? The obvious solution was to buy Philips Hue or Lifx, but my girlfriend convinced me to think again. She...">
+    <meta property="og:url" content="http://noamsh.com/iot-part-2-and-there-shall-be-light-the-smartphone-said/">
+    <meta property="article:published_time" content="2016-01-09T16:49:42.112Z">
+    <meta property="article:modified_time" content="2016-01-09T16:54:20.089Z">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="IoT Part 2 - And There Shall be Light (the smartphone said)">
+    <meta name="twitter:description" content="Now, after being able to spy on our dog, I thought, what if I'm not home and the sun went down? The obvious solution was to buy Philips Hue or Lifx, but my girlfriend convinced me to think again. She...">
+    <meta name="twitter:url" content="http://noamsh.com/iot-part-2-and-there-shall-be-light-the-smartphone-said/">
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "My Life as a Developer",
+    "author": {
+        "@type": "Person",
+        "name": "Noam Shemesh",
+        "image": "//www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404",
+        "url": "http://noamsh.com/author/noam-shemesh",
+        "sameAs": "http://noamsh.com/about",
+        "description": "10 years of programming experience, and still love it.\nCurrently live in Tel Aviv."
+    },
+    "headline": "IoT Part 2 - And There Shall be Light (the smartphone said)",
+    "url": "http://noamsh.com/iot-part-2-and-there-shall-be-light-the-smartphone-said/",
+    "datePublished": "2016-01-09T16:49:42.112Z",
+    "dateModified": "2016-01-09T16:54:20.089Z",
+    "description": "Now, after being able to spy on our dog, I thought, what if I&#x27;m not home and the sun went down? The obvious solution was to buy Philips Hue or Lifx, but my girlfriend convinced me to think again. She..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.7">
+    <link rel="alternate" type="application/rss+xml" title="My Life as a Developer" href="http://noamsh.com/rss/">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="index.html#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="http://noamsh.com/">Home</a></li>
+            <li class="nav-about" role="presentation"><a href="http://noamsh.com/about">About</a></li>
+    </ul>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="index.html#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">IoT Part 2 - And There Shall be Light (the smartphone said)</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2016-01-09">09 January 2016</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>Now, after being able to spy on our dog, I thought, what if I'm not home and the sun went down?</p>
+
+<p>The obvious solution was to buy Philips Hue or Lifx, but my girlfriend convinced me to think again. She knew that I would be much more happy if I do it by myself.</p>
+
+<p>So I turned to google, to find a substitute that is more open than Hue, and found MiLight (or LimitlessLED, same product) - a Chinese brand that gives you the same value but open, and with a bonus - much less expensive.</p>
+
+<p>I ordered 3 RGBW light bulbs, a remote control, and a wifi controller from <a href="http://www.ebay.com/usr/movsun">movsun</a>. That costed me only 70$ and arrived within a month (we have some real issues with Israel post).</p>
+
+<p>2 minutes after opening the box, we were able to turn on the lights and control them with the remote control. 4 minutes after we also controlled them with our phones. <br>
+BTW, even though the lights "work over wifi", we need a wifi controller, that's because they work over 2.4GHz and probably not wifi certified. <br>
+The remote control or the wifi controller pair to them after you turn the lights off and then on, that's when the lights are discoverable. Meaning that one of the parties have fixed id and it sends them to the other party (I'd put my money on the lights themselves) - read more <a href="https://hackaday.io/project/5888-reverse-engineering-the-milight-on-air-protocol">here</a>. </p>
+
+<p>The next thing I wanted to do is to connect the lights together with the camera from part 1. <br>
+I started with turn the lights on when we come in, and turn all the lights except one when leaving. <br>
+To do that, I hacked <a href="https://github.com/noamshemesh/motion-starter">motion-starter</a> package from part 1 using <a href="https://github.com/mwittig/node-milight-promise">node-milight-promise</a> which let me send commands to the wifi controller (their protocol is known). I set a fixed ip for the wifi controller, fetch the code on my raspberry, and it worked. Entering the house has never been more welcoming.</p>
+
+<p>Ok, so now we want to have some fun with the lights, and I heard somewhere about lights that change on every incoming notification. <br>
+To do that I wrote <a href="https://github.com/noamshemesh/limitless-pushbullet">limitless-pushbullet</a>, to create a bridge between the lights and <a href="https://www.pushbullet.com/">Pushbullet</a>. All I had left to do is to create an API token in Pushbullet website and create a service in the raspberry to run the script with the relevant parameters.</p>
+
+<p>This whole thing was a great success, everything works as expected and even better. I already ordered 2 LED strips. We'll see how it goes.</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="../author/noam-shemesh/" style="background-image: url(http://www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404)"><span class="hidden">Noam Shemesh's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="../author/noam-shemesh/">Noam Shemesh</a></h4>
+
+                    <p>10 years of programming experience, and still love it.
+Currently live in Tel Aviv.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">Tel Aviv</span>
+                    <span class="author-link icon-link"><a href="http://noamsh.com/about">http://noamsh.com/about</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=IoT%20Part%202%20-%20And%20There%20Shall%20be%20Light%20(the%20smartphone%20said)&amp;url=http://noamsh.com/iot-part-2-and-there-shall-be-light-the-smartphone-said/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://noamsh.com/iot-part-2-and-there-shall-be-light-the-smartphone-said/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://noamsh.com/iot-part-2-and-there-shall-be-light-the-smartphone-said/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+	
+	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'noamsh'; // required: replace example with your forum shortname
+    var disqus_identifier = '';
+ 
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a> 
+
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story prev no-cover" href="../iot-part-1-raspberry-dog-spy/">
+        <section class="post">
+            <h2>IoT Part 1 - Raspberry, Dog, Spy</h2>
+            <p>I've been thinking about writing this post for a very long time. Unfortunately I couldn't find the time (lame…</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="http://noamsh.com">My Life as a Developer</a> © 2016</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-52398580-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=052e489564"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=052e489564"></script>
+
+</body>
