@@ -1,0 +1,227 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Javascript Integration Tests Coverage with Istanbul</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=1be091d797">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+
+    <link rel="canonical" href="http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/">
+    <meta name="referrer" content="origin">
+    
+    <meta property="og:site_name" content="My Life as a Developer">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Javascript Integration Tests Coverage with Istanbul">
+    <meta property="og:description" content="We've all heard about the importance of tests. Especially in javascript when even a minor code refactoring is becoming an issue because of the dynamic nature of the language. But even if the project has a lot of tests, we're...">
+    <meta property="og:url" content="http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/">
+    <meta property="article:published_time" content="2014-07-05T11:20:00.000Z">
+    <meta property="article:modified_time" content="2015-10-27T21:01:44.309Z">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Javascript Integration Tests Coverage with Istanbul">
+    <meta name="twitter:description" content="We've all heard about the importance of tests. Especially in javascript when even a minor code refactoring is becoming an issue because of the dynamic nature of the language. But even if the project has a lot of tests, we're...">
+    <meta name="twitter:url" content="http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/">
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "My Life as a Developer",
+    "author": {
+        "@type": "Person",
+        "name": "Noam Shemesh",
+        "image": "//www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404",
+        "url": "http://noamsh.com/author/noam-shemesh",
+        "sameAs": "http://noamsh.com/about",
+        "description": "10 years of programming experience, and still love it.\nCurrently live in Tel Aviv."
+    },
+    "headline": "Javascript Integration Tests Coverage with Istanbul",
+    "url": "http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/",
+    "datePublished": "2014-07-05T11:20:00.000Z",
+    "dateModified": "2015-10-27T21:01:44.309Z",
+    "description": "We&#x27;ve all heard about the importance of tests. Especially in javascript when even a minor code refactoring is becoming an issue because of the dynamic nature of the language. But even if the project has a lot of tests, we&#x27;re..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.7">
+    <link rel="alternate" type="application/rss+xml" title="My Life as a Developer" href="http://noamsh.com/rss/">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="index.html#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="http://noamsh.com/">Home</a></li>
+            <li class="nav-about" role="presentation"><a href="http://noamsh.com/about">About</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="http://noamsh.com/rss/">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="index.html#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Javascript Integration Tests Coverage with Istanbul</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2014-07-05">05 July 2014</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>We've all heard about the importance of tests. Especially in javascript when even a minor code refactoring is becoming an issue because of the dynamic nature of the language.</p>
+
+<p>But even if the project has a lot of tests, we're not sure if every line in the code is covered. That's where coverage tools come in handy.</p>
+
+<p>What is the problem then? While running coverage for unit tests is pretty easy and works out of the box (e.g. <a href="http://blanketjs.org" title="Blanket.js">blanket.js</a>), coverage for integration tests is a bit harder, because the tool doesn't know what is the code that is being tested.</p>
+
+<p><!--more-->It took me a few hours to realize that <a href="https://github.com/gotwarlost/istanbul" title="istanbul">Istanbul</a> already solved this problem, they are giving the option to instrument code, although the documentation about this feature is pretty shallow. Maybe this post will help if you encounter the same issue.</p>
+
+<p>Instrumenting your code is to convert your source code to a code with coverage data, so the coverage tool will be able to generate a report with the relevant coverage.</p>
+
+<p>In order to get the report for all of our tests, assuming the unit tests and the integration tests are in the same folder, run the following:</p>
+
+<ol>
+<li><p>Run the server with istanbul cover <br>
+<code>istanbul cover --report none [main-file.js]</code></p>
+
+<p>Additional parameters can be added after two dashes: <br>
+<code>istanbul cover --report none [.instrument/main-file.js] -- [params]</code></p></li>
+<li><p>Run the tests - <br>
+<code>istanbul cover --report none --dir coverage/unit node_modules/.bin/_mocha -- -R spec [./instrument/tests folder] --recursive</code></p></li>
+<li><p>Generate the report <br>
+<code>istanbul report</code></p></li>
+</ol>
+
+<p>On the first step, we just ran the server code with coverage info by istanbul.</p>
+
+<p>The second step is interesting, here we executed all of the project tests, including unit tests, integration tests and system tests, assuming that all of them are in the same folder. If they are not, you can run this step for each tests folder, but make sure that the output of the coverage will be different (<code>--dir coverage/unit</code> parameter). <br>
+Notice the underscore before mocha, that's because the regular mocha forks _mocha that and detaches the coverage tool. <a href="https://github.com/gotwarlost/istanbul/issues/44#issuecomment-16093330" title="_mocha vs mocha">More about this issue</a>. <br>
+The two dashes are as before, the values after them are the parameters to the executed command.</p>
+
+<p>On the last step, we generated the report, the magic here is that istanbul knows to take all the files that matched the pattern <code>**/coverage*.json</code> (<a href="https://github.com/gotwarlost/istanbul/blob/master/lib/command/report.js" title="Istanbul source code">from the source here</a>).</p>
+
+<p>Happy Coveraging! <br>
+Noam.</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="../author/noam-shemesh/" style="background-image: url(http://www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404)"><span class="hidden">Noam Shemesh's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="../author/noam-shemesh/">Noam Shemesh</a></h4>
+
+                    <p>10 years of programming experience, and still love it.
+Currently live in Tel Aviv.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">Tel Aviv</span>
+                    <span class="author-link icon-link"><a href="http://noamsh.com/about">http://noamsh.com/about</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=Javascript%20Integration%20Tests%20Coverage%20with%20Istanbul&amp;url=http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+	
+	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'noamsh'; // required: replace example with your forum shortname
+    var disqus_identifier = '';
+ 
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a> 
+
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="../iot-part-1-raspberry-dog-spy/">
+        <section class="post">
+            <h2>IoT Part 1 - Raspberry, Dog, Spy</h2>
+            <p>I've been thinking about writing this post for a very long time. Unfortunately I couldn't find the time (lame…</p>
+        </section>
+    </a>
+    <a class="read-next-story prev no-cover" href="../how-to-create-a-data-cluster-and-live-through-it/">
+        <section class="post">
+            <h2>How to Create a Data Cluster and Live Through It</h2>
+            <p>This post originally posted at BigPanda's Blog, BigPanda is the cool start-up company that I currently work at, you…</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="http://noamsh.com">My Life as a Developer</a> © 2016</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-52398580-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=1be091d797"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=1be091d797"></script>
+
+</body>

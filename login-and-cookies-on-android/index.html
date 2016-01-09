@@ -1,0 +1,371 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Login and Cookies on Android</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=1be091d797">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+
+    <link rel="canonical" href="http://noamsh.com/login-and-cookies-on-android/">
+    <meta name="referrer" content="origin">
+    
+    <meta property="og:site_name" content="My Life as a Developer">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Login and Cookies on Android">
+    <meta property="og:description" content="If you ever tried to work with cookies and Android you know that it isn't covered well over the net. The log-in screen, however, is more covered, there are many templates all over the net, but we couldn't find a...">
+    <meta property="og:url" content="http://noamsh.com/login-and-cookies-on-android/">
+    <meta property="article:published_time" content="2013-08-30T08:44:00.000Z">
+    <meta property="article:modified_time" content="2015-10-27T21:02:18.059Z">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Login and Cookies on Android">
+    <meta name="twitter:description" content="If you ever tried to work with cookies and Android you know that it isn't covered well over the net. The log-in screen, however, is more covered, there are many templates all over the net, but we couldn't find a...">
+    <meta name="twitter:url" content="http://noamsh.com/login-and-cookies-on-android/">
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "My Life as a Developer",
+    "author": {
+        "@type": "Person",
+        "name": "Noam Shemesh",
+        "image": "//www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404",
+        "url": "http://noamsh.com/author/noam-shemesh",
+        "sameAs": "http://noamsh.com/about",
+        "description": "10 years of programming experience, and still love it.\nCurrently live in Tel Aviv."
+    },
+    "headline": "Login and Cookies on Android",
+    "url": "http://noamsh.com/login-and-cookies-on-android/",
+    "datePublished": "2013-08-30T08:44:00.000Z",
+    "dateModified": "2015-10-27T21:02:18.059Z",
+    "description": "If you ever tried to work with cookies and Android you know that it isn&#x27;t covered well over the net. The log-in screen, however, is more covered, there are many templates all over the net, but we couldn&#x27;t find a..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.7">
+    <link rel="alternate" type="application/rss+xml" title="My Life as a Developer" href="http://noamsh.com/rss/">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="index.html#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="http://noamsh.com/">Home</a></li>
+            <li class="nav-about" role="presentation"><a href="http://noamsh.com/about">About</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="http://noamsh.com/rss/">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="index.html#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Login and Cookies on Android</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2013-08-30">30 August 2013</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>If you ever tried to work with cookies and Android you know that it isn't covered well over the net.</p>
+
+<p>The log-in screen, however, is more covered, there are many templates all over the net, but we couldn't find a template that covers the flow from A to Z, with cookies and result code handling.</p>
+
+<p>That's the motivation. Now for the good part:</p>
+
+<p><!--more-->Let's start with architecture, we are going to use cookies to save the credentials of the user by the server in his device. Just as websites do. Also, one of the requirements is that the user will log-in only when he has to (think about <a href="http://www.ebay.com">eBay </a> purchasing process), so we have to handle the 401 HTTP code from node.js when the user has no cookie or cookie credentials are incorrect, and not just open for him the <code>LoginActivity</code> on start.</p>
+
+<p>For the authentication and credentials management parts we forked <a href="https://github.com/fnakstad/angular-client-side-auth">angular-client-side-auth</a> that pretty covered up all the node.js and Angular.js log-in and registration flow, and we wanted the same for android.</p>
+
+<p>When apache HTTP client was the option, it didn't know how to persist cookies, so we serialized them into a <code>SharedPreferences</code> object, it's probably not the best solution as it was buggy as hell and a lot of code to write.</p>
+
+<p>Then <a href="http://loopj.com/android-async-http/">loopj asynchronous http client library</a> came up, this great library knows how to persist cookies with just 2 lines of code:</p>
+
+<pre><code class="language- java">PersistentCookieStore cookieStore = new PersistentCookieStore(this);  
+httpClient.setCookieStore(cookieStore);  
+</code></pre>
+
+<p>Cookie issue faded away.</p>
+
+<p>Besides cookies, there is result code handle, if it's 401 we send the user to the <code>LoginActivity.</code> Then, according to implementation, the app can post/get the url again:</p>
+
+<pre><code class="language- java">public void onFailure(final Throwable t, final String message) {  
+    new AsyncTask&amp;lt;Void, Void, Void&amp;gt;() {
+        @Override
+        protected Void doInBackground(Void... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            if (t instanceof HttpResponseException) {
+                int responseCode = ((HttpResponseException) t).getStatusCode();
+                if (responseCode == 401) {
+                    commonPool.handleUnauthorize();
+                } else {
+                    String msg = responseCode + &amp;quot;: &amp;quot; + t.getMessage() + &amp;quot; &amp;quot; + message;
+                    Log.e(TAG, msg);
+                    onFailure.doCallback(msg);
+                }
+            }
+        }
+    }.execute();
+}
+</code></pre>
+
+<p>The <code>AsyncTask</code> is because we want to run the <code>startActivity</code> on the UI thread.</p>
+
+<p>Here is the code for POST one object and return one object and GET and return one object. <code>CommonPool</code> is the <code>Application</code> of the project.</p>
+
+<pre><code class="language- java ServerUtils">public final class ServerUtils {  
+    protected static final String TAG = ServerUtils.class.getSimpleName();
+    private static AsyncHttpClient httpclient;
+    private static final String APPLICATION_JSON = &amp;quot;application/json&amp;quot;;
+    private static final String TEXT_PLAIN = &amp;quot;text/plain&amp;quot;;
+    private static final String CHARSET = &amp;quot;UTF-8&amp;quot;;
+
+    private static Gson gson = new GsonBuilder().create();
+
+    private ServerUtils() {
+    }
+
+    private static void initClient(CommonPool commonPool) {
+        if (httpclient != null) {
+            return;
+        }
+        httpclient = new AsyncHttpClient();
+        PersistentCookieStore cookieStore = new PersistentCookieStore(commonPool);
+        httpclient.setCookieStore(cookieStore);
+    }
+
+    private static void onPreExecute(CommonPool commonPool) {
+        initClient(commonPool);
+        httpclient.setTimeout(Constants.DEFAULT_SERVER_TIMEOUT);
+    }
+
+    public static  void get(CommonPool commonPool, String url, final Callback onCallback, final Callback onFailure,
+            final Class clazz) {
+        onPreExecute(commonPool);
+        httpclient.get(url, getOneObjectJson(onCallback, clazz, commonPool, onFailure));
+    }
+
+    public static  void post(final CommonPool commonPool, String url, final Object object,
+            final Callback onCallback, final Callback onFailure, final Class clazz) {
+        try {
+            onPreExecute(commonPool);
+            httpclient.post(commonPool, url, new StringEntity(gson.toJson(object), CHARSET),
+                    getContentType(object),
+                    getOneObjectJson(onCallback, clazz, commonPool, onFailure));
+        } catch (UnsupportedEncodingException e) {
+            // Can't happen.
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
+    private static String getContentType(final Object object) {
+        return object == null || object instanceof String ? TEXT_PLAIN : APPLICATION_JSON;
+    }
+
+    public static class MyJsonHttpResponseHandler extends JsonHttpResponseHandler {
+        private Callback onFailure;
+        private CommonPool commonPool;
+
+        public MyJsonHttpResponseHandler(CommonPool commonPool, Callback onFailure) {
+            this.commonPool = commonPool;
+            this.onFailure = onFailure;
+        }
+
+        @Override
+        public void onFailure(Throwable t, JSONArray jsonArray) {
+            onFailure(t, jsonArray != null ? jsonArray.toString() : &amp;quot;&amp;quot;);
+        }
+
+        @Override
+        public void onFailure(Throwable t, JSONObject json) {
+            onFailure(t, json != null ? json.toString() : &amp;quot;&amp;quot;);
+        }
+
+        @Override
+        public void onFailure(final Throwable t, final String message) {
+            new AsyncTask&amp;lt;Void, Void, Void&amp;gt;() {
+                @Override
+                protected Void doInBackground(Void... params) {
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void result) {
+                    if (t instanceof HttpResponseException) {
+                        int responseCode = ((HttpResponseException) t).getStatusCode();
+                        if (responseCode == 401) {
+                            commonPool.handleUnauthorize();
+                        } else {
+                            String msg = responseCode + &amp;quot;: &amp;quot; + t.getMessage() + &amp;quot; &amp;quot; + message;
+                            Log.e(TAG, msg);
+                            onFailure.doCallback(msg);
+                        }
+                    }
+                }
+            }.execute();
+        }
+    }
+
+    private static  JsonHttpResponseHandler getOneObjectJson(final Callback onCallback, final Class clazz,
+            CommonPool commonPool, Callback onFailure) {
+        return new MyJsonHttpResponseHandler(commonPool, onFailure) {
+            @Override
+            public void onSuccess(int reponseCode, JSONObject json) {
+                onCallback.doCallback(gson.fromJson(json.toString(), clazz));
+            }
+
+            @SuppressWarnings(&amp;quot;unchecked&amp;quot;)
+            @Override
+            public void onSuccess(int responseCode, String response) {
+                if (clazz == null || clazz.isAssignableFrom(String.class)) {
+                    onCallback.doCallback((T) response);
+                } else {
+                    onFailure(new IllegalArgumentException(&amp;quot;clazz&amp;quot;), response);
+                }
+            }
+        };
+    }
+
+    public static String toJson(Object obj) {
+        return gson.toJson(obj);
+    }
+
+    public static  T fromJson(String json, Class clazz) {
+        return gson.fromJson(json, clazz);
+    }
+}
+</code></pre>
+
+<p>A reasonable parameter to these 2 methods could be a boolean that tells if send to login screen if not logged in, or just return null, that's for some calls that will happen before the critical section that require the login (register <a href="https://developer.android.com/google/gcm/gs.html">GCM</a> key for example).</p>
+
+<p>Although it may ended up with pretty straight forward code, the way to it wasn't, I hope it will help someone out there.</p>
+
+<p>Noam.</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="../author/noam-shemesh/" style="background-image: url(http://www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404)"><span class="hidden">Noam Shemesh's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="../author/noam-shemesh/">Noam Shemesh</a></h4>
+
+                    <p>10 years of programming experience, and still love it.
+Currently live in Tel Aviv.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">Tel Aviv</span>
+                    <span class="author-link icon-link"><a href="http://noamsh.com/about">http://noamsh.com/about</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=Login%20and%20Cookies%20on%20Android&amp;url=http://noamsh.com/login-and-cookies-on-android/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://noamsh.com/login-and-cookies-on-android/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://noamsh.com/login-and-cookies-on-android/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+	
+	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'noamsh'; // required: replace example with your forum shortname
+    var disqus_identifier = '';
+ 
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a> 
+
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="../google-maps-angular-and-draggable-frame/">
+        <section class="post">
+            <h2>Google Maps, Angular and Draggable Frame</h2>
+            <p>Probably not the best title for this post, but one image will explain it:    Only the markers in the…</p>
+        </section>
+    </a>
+    <a class="read-next-story prev no-cover" href="../nodeangularmyself-intro/">
+        <section class="post">
+            <h2>(Node|Angular|Myself) Intro</h2>
+            <p>Lately I started to work with node.js and Angular.js in two different projects that are in different…</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="http://noamsh.com">My Life as a Developer</a> © 2016</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-52398580-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=1be091d797"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=1be091d797"></script>
+
+</body>

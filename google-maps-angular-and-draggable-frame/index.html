@@ -1,0 +1,339 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Google Maps, Angular and Draggable Frame</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=1be091d797">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+
+    <link rel="canonical" href="http://noamsh.com/google-maps-angular-and-draggable-frame/">
+    <meta name="referrer" content="origin">
+    
+    <meta property="og:site_name" content="My Life as a Developer">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Google Maps, Angular and Draggable Frame">
+    <meta property="og:description" content="Probably not the best title for this post, but one image will explain it:    Only the markers in the phone are shown, the user can move the  phone frame and see others markers. The main idea is to create a...">
+    <meta property="og:url" content="http://noamsh.com/google-maps-angular-and-draggable-frame/">
+    <meta property="article:published_time" content="2013-09-20T11:55:00.000Z">
+    <meta property="article:modified_time" content="2015-10-27T21:02:26.493Z">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Google Maps, Angular and Draggable Frame">
+    <meta name="twitter:description" content="Probably not the best title for this post, but one image will explain it:    Only the markers in the phone are shown, the user can move the  phone frame and see others markers. The main idea is to create a...">
+    <meta name="twitter:url" content="http://noamsh.com/google-maps-angular-and-draggable-frame/">
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "My Life as a Developer",
+    "author": {
+        "@type": "Person",
+        "name": "Noam Shemesh",
+        "image": "//www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404",
+        "url": "http://noamsh.com/author/noam-shemesh",
+        "sameAs": "http://noamsh.com/about",
+        "description": "10 years of programming experience, and still love it.\nCurrently live in Tel Aviv."
+    },
+    "headline": "Google Maps, Angular and Draggable Frame",
+    "url": "http://noamsh.com/google-maps-angular-and-draggable-frame/",
+    "datePublished": "2013-09-20T11:55:00.000Z",
+    "dateModified": "2015-10-27T21:02:26.493Z",
+    "description": "Probably not the best title for this post, but one image will explain it:    Only the markers in the phone are shown, the user can move the  phone frame and see others markers. The main idea is to create a..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.7">
+    <link rel="alternate" type="application/rss+xml" title="My Life as a Developer" href="http://noamsh.com/rss/">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="index.html#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="http://noamsh.com/">Home</a></li>
+            <li class="nav-about" role="presentation"><a href="http://noamsh.com/about">About</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="http://noamsh.com/rss/">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="index.html#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Google Maps, Angular and Draggable Frame</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2013-09-20">20 September 2013</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>Probably not the best title for this post, but one image will explain it:</p>
+
+<p><img src="https://s3-eu-west-1.amazonaws.com/noamsh/screen-shot-2013-09-20-at-1-54-56-pm.png" alt="Screen Shot 2013-09-20 at 1.54.56 PM" title="">   Only the markers in the phone are shown, the user can move the  phone frame and see others markers.</p>
+
+<p>The main idea is to create a div that would update angular with its current position (and sizes, if not fixed), and then update the markers on the map to be visible if they are inside the frame, otherwise set them to be invisible.</p>
+
+<p><!--more-->An ideal angular library for google maps is <a href="https://github.com/nlaplante/angular-google-maps">nlaplante's angular-google-maps</a>. The library itself is very good, although it doesn't export the google's main map object, what I believe he did for a reason, encapsulation for that matter, and this is probably the correct way of doing it, but wasn't enough for me. I understood that wrapping all the objects and the events that I need probably will get me nothing. So I <a href="https://github.com/noamshemesh/angular-google-maps">forked</a> it, and also added padding to the "fit" functionality, and export the google's markers objects too.</p>
+
+<p>For the draggable functionality I use <a href="http://jqueryui.com/draggable/">jquery-ui,</a> which I wasn't familiar with, but it is easy to use and do what you want it to do.</p>
+
+<p>Let's start with some code, the main page that the user sees is index.jade, that using the <a href="http://jade-lang.com/">jade</a> language, that is seamlessly compiled to html</p>
+
+<p>index.jade:</p>
+
+<pre><code class="language- javascript">#draggable(draggable, xpos='xpos', ypos='ypos')
+  img(id='phone')
+google-map.map(center=&amp;quot;center&amp;quot;, fit=&amp;quot;true&amp;quot;, draggable=&amp;quot;true&amp;quot;, zoom=&amp;quot;zoom&amp;quot;, markers=&amp;quot;markers&amp;quot;, mark-click=&amp;quot;false&amp;quot;, map=&amp;quot;map&amp;quot;)  
+</code></pre>
+
+<p>The first line of the index.jade is the definition of the phone frame that is draggable, you can see that there are 2 "draggable" elements, the first is the id of the object, that is needed for the jquery-ui in order to define it as draggable and for this css:</p>
+
+<p>app.scss:</p>
+
+<pre><code class="language- css">  #draggable {
+    height: 516px;
+    width: 300px;
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    #phone {
+      height: 516px;
+      width: 300px;
+      background-image: url(&amp;quot;/img/android_frame.png&amp;quot;);
+      background-size: 300px 516px;
+      background-repeat: no-repeat;
+    }
+  }
+</code></pre>
+
+<p>Notice the z-index of the div.</p>
+
+<p>Back to the draggable definition, the second draggable word, with the other attributes, are the interesting ones, they related directly to this angular directive:</p>
+
+<p>controller.js:</p>
+
+<pre><code class="language- javascript">app.directive('draggable', function () {  
+  return {
+    restrict: 'A',
+    link: function (scope, element, attrs) {
+      var update = function (event, ui) {
+        scope.$eval(attrs.xpos + '=' + ui.position.left);
+        scope.$eval(attrs.ypos + '=' + ui.position.top);
+        scope.$apply();
+      };
+      var lastUpdate = 0;
+      var updateEveryXMillis = function (event, ui) {
+        if (new Date().getTime() - lastUpdate &amp;gt;= 100) {
+          update(event, ui);
+          lastUpdate = new Date().getTime();
+        }
+      }
+
+      $('#draggable').draggable({
+        cursor: &amp;quot;drag&amp;quot;,
+        stop: update,
+        drag: updateEveryXMillis
+      });
+    }
+  };
+});
+</code></pre>
+
+<p>The directive itself initialize the jquery-ui draggable functionality on the element, the element parameter of link function didn't has the draggable method, causing <code>TypeError: Object [object Object] has no method 'draggable'</code>. When calling to draggable method, I define what to do when the user drags and when he stops, the logic of these functions is simple, update xpos and ypos of the $scope (they are under the scope cause I bound them in the jade above), and now, all we have to do is to update the markers visibility:</p>
+
+<p>controller.js:</p>
+
+<pre><code class="language- javascript">var app = angular.module(&amp;quot;map&amp;quot;, [&amp;quot;google-maps&amp;quot;]);  
+app.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) {  
+  angular.extend($scope, {
+    center: {
+      latitude: 0,
+      longitude: 0
+    },
+    markers: [],
+    zoom: 8
+  });
+
+  function getLocations() {
+    $http.get('/locations').success(function (data) {
+      var markers = []
+      _.forEach(data.locations, function (location) {
+        markers.push({ latitude: location.latitude, longitude: location.longitude, visible: false });
+      });
+      $scope.markers = markers;
+    });
+  }
+
+  getLocations();
+  setInterval(getLocations, 5000);
+
+  var phone = $('#phone')
+  var phoneWidth = phone.width();
+  var phoneHeight = phone.height();
+
+  function updateMarkerVisibility(marker, xpos, ypos) {
+    var markerPoint = $scope.map.overlay.getProjection().
+        fromLatLngToContainerPixel(marker.getPosition());
+    marker.setVisible(markerPoint.x &amp;gt;= xpos &amp;amp;&amp;amp; markerPoint.x &amp;lt;= xpos + phoneWidth &amp;amp;&amp;amp;
+        markerPoint.y &amp;gt;= ypos &amp;amp;&amp;amp; markerPoint.y &amp;lt;= ypos + phoneHeight);
+  }
+
+  $scope.$watch('map._markers', function (newMarkers) {
+    _.forEach(newMarkers, function (marker) {
+      updateMarkerVisibility(marker, $scope.xpos, $scope.ypos);
+    })
+  })
+
+  $scope.$watch('xpos', function (newValue, oldValue) {
+    if ($scope.map &amp;amp;&amp;amp; $scope.map._markers) {
+      _.forEach($scope.map._markers, function (marker) {
+        updateMarkerVisibility(marker, newValue, $scope.ypos);
+      })
+    }
+  })
+
+  $scope.$watch('ypos', function (newValue, oldValue) {
+    if ($scope.map &amp;amp;&amp;amp; $scope.map._markers) {
+      _.forEach($scope.map._markers, function (marker) {
+        updateMarkerVisibility(marker, $scope.xpos, newValue);
+      })
+    }
+  })
+}]);
+</code></pre>
+
+<p>Here I watch the xpos, ypos of the scope and the markers of google's map that have been updated when markers got updated in the interval function by the angular-google-maps library. <br>
+When any delegate of the watch function is called it decides if each marker need to be shown. <br>
+If you want to support zoom you need to watch its changes too.</p>
+
+<p>The angular extend, is for the angular-google-maps library that mentioned above.</p>
+
+<p>Don't forget to tell angular what is your controller in the jade file.</p>
+
+<p>Noam.</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="../author/noam-shemesh/" style="background-image: url(http://www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404)"><span class="hidden">Noam Shemesh's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="../author/noam-shemesh/">Noam Shemesh</a></h4>
+
+                    <p>10 years of programming experience, and still love it.
+Currently live in Tel Aviv.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">Tel Aviv</span>
+                    <span class="author-link icon-link"><a href="http://noamsh.com/about">http://noamsh.com/about</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=Google%20Maps%2C%20Angular%20and%20Draggable%20Frame&amp;url=http://noamsh.com/google-maps-angular-and-draggable-frame/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://noamsh.com/google-maps-angular-and-draggable-frame/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://noamsh.com/google-maps-angular-and-draggable-frame/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+	
+	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'noamsh'; // required: replace example with your forum shortname
+    var disqus_identifier = '';
+ 
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a> 
+
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="../sqlite-dal-for-android/">
+        <section class="post">
+            <h2>SQLite DAL for Android</h2>
+            <p>While developing for Android I had this feeling that something was missing. In Java, most of the time we…</p>
+        </section>
+    </a>
+    <a class="read-next-story prev no-cover" href="../login-and-cookies-on-android/">
+        <section class="post">
+            <h2>Login and Cookies on Android</h2>
+            <p>If you ever tried to work with cookies and Android you know that it isn't covered well over the…</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="http://noamsh.com">My Life as a Developer</a> © 2016</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-52398580-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=1be091d797"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=1be091d797"></script>
+
+</body>

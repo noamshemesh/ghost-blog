@@ -1,0 +1,272 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>How to Create a Data Cluster and Live Through It</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=1be091d797">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+
+    <link rel="canonical" href="http://noamsh.com/how-to-create-a-data-cluster-and-live-through-it/">
+    <meta name="referrer" content="origin">
+    
+    <meta property="og:site_name" content="My Life as a Developer">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How to Create a Data Cluster and Live Through It">
+    <meta property="og:description" content="This post originally posted at BigPanda's Blog, BigPanda is the cool start-up company that I currently work at, you can find more about how it manages alerts and fights the alert fatigue here. As the world of software development is...">
+    <meta property="og:url" content="http://noamsh.com/how-to-create-a-data-cluster-and-live-through-it/">
+    <meta property="article:published_time" content="2014-06-13T15:17:00.000Z">
+    <meta property="article:modified_time" content="2015-10-27T21:02:08.786Z">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="How to Create a Data Cluster and Live Through It">
+    <meta name="twitter:description" content="This post originally posted at BigPanda's Blog, BigPanda is the cool start-up company that I currently work at, you can find more about how it manages alerts and fights the alert fatigue here. As the world of software development is...">
+    <meta name="twitter:url" content="http://noamsh.com/how-to-create-a-data-cluster-and-live-through-it/">
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "My Life as a Developer",
+    "author": {
+        "@type": "Person",
+        "name": "Noam Shemesh",
+        "image": "//www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404",
+        "url": "http://noamsh.com/author/noam-shemesh",
+        "sameAs": "http://noamsh.com/about",
+        "description": "10 years of programming experience, and still love it.\nCurrently live in Tel Aviv."
+    },
+    "headline": "How to Create a Data Cluster and Live Through It",
+    "url": "http://noamsh.com/how-to-create-a-data-cluster-and-live-through-it/",
+    "datePublished": "2014-06-13T15:17:00.000Z",
+    "dateModified": "2015-10-27T21:02:08.786Z",
+    "description": "This post originally posted at BigPanda&#x27;s Blog, BigPanda is the cool start-up company that I currently work at, you can find more about how it manages alerts and fights the alert fatigue here. As the world of software development is..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.7">
+    <link rel="alternate" type="application/rss+xml" title="My Life as a Developer" href="http://noamsh.com/rss/">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="index.html#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="http://noamsh.com/">Home</a></li>
+            <li class="nav-about" role="presentation"><a href="http://noamsh.com/about">About</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="http://noamsh.com/rss/">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="index.html#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">How to Create a Data Cluster and Live Through It</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2014-06-13">13 June 2014</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>This post originally posted at <a href="http://bit.ly/1v4ycZY" title="BigPanda">BigPanda's Blog</a>, BigPanda is the cool start-up company that I currently work at, you can find more about how it manages alerts and fights the alert fatigue <a href="http://bigpanda.io" title="BigPanda">here</a>.</p>
+
+<p>As the world of software development is moving to <a href="http://bigpanda.io" title="BigPanda">BigPanda</a>, ahmm... sorry, I meant Big Data, we need to pay attention to synchronization, and it's becoming one of the most difficult challenges we face.</p>
+
+<p>Here at BigPanda, we receive a lot of alerts from <a href="http://bigpanda.io/integrations/">many monitoring systems</a>, and naturally we want to keep the data synchronized and consistent. One issue we face is when a server is reported by a monitoring system as <strong>DOWN</strong>, and then, one moment later is reported as <strong>UP</strong>. We need the two events to be processed in relation to the same server and in the correct order, to ensure the status does not end up being <strong>DOWN</strong>.</p>
+
+<p><!--more-->Our data cluster was written because we wanted to synchronize the data in our back-end applications, and not in the database itself. We believe this is a better approach for several reasons:</p>
+
+<ul>
+<li><em>Vendor independence</em> - Today we use <a href="http://www.mongodb.org" title="mongodb">MongoDB</a>, but our needs and the database may change in the future.</li>
+<li><em>Control</em> - Sharding complex data entities across servers is difficult without understanding the application-level entities. We know the entities, but MongoDB, <a href="http://cassandra.apache.org" title="Cassanda">Cassandra</a> or <a href="http://hbase.apache.org" title="HBase">HBase</a> don't.</li>
+<li><em>Synchronization</em> - As described above, we need to process correctly two updates for the same entity that occur at the same time.</li>
+</ul>
+
+<h4 id="oursolutionfrodoio">Our Solution: Frodo.io</h4>
+
+<p>To address this challenge we developed Frodo.io (Github: <a href="https://github.com/bigpandaio/frodo">https://github.com/bigpandaio/frodo</a>). Frodo.io exposes an easy to use API that allows you to easily synchronize distributed backends. It returns the server by entity details, and ensures it will always return the same server for a given ID. Frodo orchestrates <strong><a href="https://github.com/coreos/etcd" title="etcd">etcd</a></strong> and <strong><a href="https://github.com/3rd-Eden/node-hashring" title="hashring">hashring</a>.</strong></p>
+
+<p><strong>etcd</strong> - is <em>a highly-available key value store for shared configuration and service discovery</em> (from <a href="https://github.com/coreos/etcd/blob/master/README.md" title="etcd">etcd's README</a>)</p>
+
+<p><strong>hashring</strong> - is a consistent hashing algorithm implementation. The hashing algorithm is optimized so that when the hash table is resized, the number of keys that it needs to migrate is relatively small.</p>
+
+<p>Let's look at an example in which we're initializing frodo, adding 3 servers to the ring, retrieving the server that should be in use for this id and making a REST request to the server:</p>
+
+<pre><code class="language- javascript">  var Frodo = require('frodoio');
+  var frodo = new Frodo({ context: 'appname', etcdServers: [ { host: '127.0.0.1', port: 4001 } ]});
+  Q.all(frodo.addServer('dataacess1:3030'),
+    frodo.addServer('dataacess2:3030'),
+    frodo.addServer('dataacess3:3030')).then(function () {
+      frodo.serverById('someId', function (server)
+        request.put('http://' + server + '/entity');
+      });
+    });
+</code></pre>
+
+<p><em>Note: don't forget to _<code>npm install frodoio</code></em> and <em><code>npm install q</code></em> in order to run this code snippet_</p>
+
+<p>No matter how many times you will make a call to a server, as long as the server list is the same, you'll consistently get the same server for the same id!</p>
+
+<p>In the following, more comprehensive, example, we separate the server code from the client code. Every server in the data cluster registers itself in frodo.io. In the client we're requesting a server to handle a specific entity and then calling a url on that server.</p>
+
+<h5 id="server">Server:</h5>
+
+<pre><code class="language- javascript">  var Frodo = require('frodoio');
+  var frodo = new Frodo({ context: 'appname', etcdServers: [ { host: '127.0.0.1', port: 4001 } ]});
+
+  // http://stackoverflow.com/questions/3653065/get-local-ip-address-in-node-js
+  var ip = _.chain(require('os').networkInterfaces()).flatten().filter(function(val){ return (val.family == 'IPv4' &amp;amp;&amp;amp; val.internal == false) }).pluck('address').first().value();
+  var me = ip + ':3030';
+
+  function start(done) {
+    frodo.addServer(me).then(done);
+  }
+
+  function stop(done) {
+    frodo.removeServer(me).then(function () {
+      frodo.close().then(done);
+    });
+  }
+</code></pre>
+
+<p>In the first two lines we are initializing frodo with the etcd config and a <code>context</code> for the application (usually just your app name). Then we fetch the IP of the current server. <br>
+The <code>start</code> and <code>stop</code> functions are "listeners" and your application should call them when it starts or stops.</p>
+
+<h5 id="client">Client:</h5>
+
+<pre><code class="language- javascript">  var Frodo = require('frodoio');
+  var frodo = new Frodo({ context: 'appname', etcdServers: [ { host: '127.0.0.1', port: 4001 } ]});
+
+  frodo.serverById(id).then(function (server) {
+    request.put('http://' + server + '/entity');
+  });
+</code></pre>
+
+<p>After initialization, we request the server by an <code>id</code>, just like in the previous example.</p>
+
+<p>Try to run at least two instances of the server, and then run the clients repeatedly with the same id to get the same server and with different ids to get different servers. The entities are evenly distributed with <strong>hashring</strong>.</p>
+
+<p>For more information about Frodo's capabilities and the API, please go to <a href="https://github.com/bigpandaio/frodo" title="frodo.io">frodo's github homepage</a>.</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="../author/noam-shemesh/" style="background-image: url(http://www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404)"><span class="hidden">Noam Shemesh's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="../author/noam-shemesh/">Noam Shemesh</a></h4>
+
+                    <p>10 years of programming experience, and still love it.
+Currently live in Tel Aviv.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">Tel Aviv</span>
+                    <span class="author-link icon-link"><a href="http://noamsh.com/about">http://noamsh.com/about</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=How%20to%20Create%20a%20Data%20Cluster%20and%20Live%20Through%20It&amp;url=http://noamsh.com/how-to-create-a-data-cluster-and-live-through-it/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://noamsh.com/how-to-create-a-data-cluster-and-live-through-it/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://noamsh.com/how-to-create-a-data-cluster-and-live-through-it/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+	
+	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'noamsh'; // required: replace example with your forum shortname
+    var disqus_identifier = '';
+ 
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a> 
+
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="../javascript-integration-tests-coverage-with-istanbul/">
+        <section class="post">
+            <h2>Javascript Integration Tests Coverage with Istanbul</h2>
+            <p>We've all heard about the importance of tests. Especially in javascript when even a minor code refactoring is becoming…</p>
+        </section>
+    </a>
+    <a class="read-next-story prev no-cover" href="../sqlite-dal-for-android/">
+        <section class="post">
+            <h2>SQLite DAL for Android</h2>
+            <p>While developing for Android I had this feeling that something was missing. In Java, most of the time we…</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="http://noamsh.com">My Life as a Developer</a> © 2016</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-52398580-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=1be091d797"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=1be091d797"></script>
+
+</body>

@@ -1,0 +1,226 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>IoT Part 1 - Raspberry, Dog, Spy</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=1be091d797">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+
+    <link rel="canonical" href="http://noamsh.com/iot-part-1-raspberry-dog-spy/">
+    <meta name="referrer" content="origin">
+    
+    <meta property="og:site_name" content="My Life as a Developer">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="IoT Part 1 - Raspberry, Dog, Spy">
+    <meta property="og:description" content="I've been thinking about writing this post for a very long time. Unfortunately I couldn't find the time (lame excuse, I know). Anyway, last year we got a dog. When I don't take him to work with me, he stays...">
+    <meta property="og:url" content="http://noamsh.com/iot-part-1-raspberry-dog-spy/">
+    <meta property="article:published_time" content="2015-10-27T20:52:28.032Z">
+    <meta property="article:modified_time" content="2015-10-27T20:52:28.026Z">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="IoT Part 1 - Raspberry, Dog, Spy">
+    <meta name="twitter:description" content="I've been thinking about writing this post for a very long time. Unfortunately I couldn't find the time (lame excuse, I know). Anyway, last year we got a dog. When I don't take him to work with me, he stays...">
+    <meta name="twitter:url" content="http://noamsh.com/iot-part-1-raspberry-dog-spy/">
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "My Life as a Developer",
+    "author": {
+        "@type": "Person",
+        "name": "Noam Shemesh",
+        "image": "//www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404",
+        "url": "http://noamsh.com/author/noam-shemesh",
+        "sameAs": "http://noamsh.com/about",
+        "description": "10 years of programming experience, and still love it.\nCurrently live in Tel Aviv."
+    },
+    "headline": "IoT Part 1 - Raspberry, Dog, Spy",
+    "url": "http://noamsh.com/iot-part-1-raspberry-dog-spy/",
+    "datePublished": "2015-10-27T20:52:28.032Z",
+    "dateModified": "2015-10-27T20:52:28.026Z",
+    "description": "I&#x27;ve been thinking about writing this post for a very long time. Unfortunately I couldn&#x27;t find the time (lame excuse, I know). Anyway, last year we got a dog. When I don&#x27;t take him to work with me, he stays..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.7">
+    <link rel="alternate" type="application/rss+xml" title="My Life as a Developer" href="http://noamsh.com/rss/">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="index.html#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="http://noamsh.com/">Home</a></li>
+            <li class="nav-about" role="presentation"><a href="http://noamsh.com/about">About</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="http://noamsh.com/rss/">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="index.html#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">IoT Part 1 - Raspberry, Dog, Spy</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-10-27">27 October 2015</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>I've been thinking about writing this post for a very long time. Unfortunately I couldn't find the time (lame excuse, I know).</p>
+
+<p><img src="https://s3-eu-west-1.amazonaws.com/noamsh/brian.jpg" alt="Brian the dog">
+Anyway, last year we got a dog. When I don't take him to work with me, he stays at home doing some dog stuff, and I wanted to spy on him.</p>
+
+<p>While assessing the options, I saw a lot of 100$+ cameras that can detect motion in the house and upload the recorded clip to the cloud.</p>
+
+<p>I thought that this is a cool option, but where is the challenge? <br>
+Luckily, I got the honor to work with <a href="http://erikzaadi.com/">Erik Zaadi</a>, the man and the Raspberry Pi. He heard that I'm considering to buy a camera and told me about <a href="http://www.lavrsen.dk/foswiki/bin/view/Motion/WebHome"><code>motion</code></a> linux package. <br>
+There it is, the challenge.</p>
+
+<p>So, instead of going out for a beer I started working on this. First, the expectations:</p>
+
+<ol>
+<li>Record on a movement</li>
+<li>Auto turn on/turn off</li>
+<li>Upload recording to cloud</li>
+<li>See live feed</li>
+<li>To be able to tell our dog to get off the couch</li>
+</ol>
+
+<p>After getting the dust off my Raspberry, I found out that the first issue got solved very quickly with aforementioned <code>motion</code> package. I <code>apt-get</code>ed it, set some <a href="http://www.lavrsen.dk/foswiki/bin/view/Motion/MotionGuideBasicFeatures">configurations</a> related to the lightening in my house, and it worked. </p>
+
+<p>Worked is an understatement, as it kept on filming us while at home. <br>
+In order to get back our privacy, I wrote a <a href="https://github.com/noamshemesh/motion-starter">tiny (and hacky) module</a> that waits for <code>start</code> and <code>stop</code> commands. Later my girlfriend moved in and I added some code to make sure that the camera will turn on only if both of us call <code>start</code>.</p>
+
+<p>To call these commands from everywhere, I use <a href="http://www.noip.com/">noip.com</a> that integrated with my router, which keeps my ip up-to-date with noip.com services, and expose the wanted services with <a href="https://www.nginx.com/resources/wiki/">nginx</a>. <br>
+What now? GPS, WiFi or Bluetooth? Well, I started with GPS Geo fencing, and it didn't work well. Now we use <a href="https://play.google.com/store/apps/details?id=AutomateIt.mainPackage">AutomateIt</a> to watch our WiFi connection and work accordingly (off when connected, on when disconnected)</p>
+
+<p>Ok, so we have recordings of movements, and they don't contain us. Next thing is to upload them to a cloud service. <br>
+After I ran into a nice module called <a href="https://github.com/andreafabrizi/Dropbox-Uploader">Dropbox-Uploader</a>, I thought that it's probably going to be the simplest way to upload the recordings, and set it up. <br>
+Simple script that uploads the files and then deletes them, call it every minute with <code>crontab</code>, and we have it.</p>
+
+<p>I wanted to spy on my dog when he eats his bone, and not a minute later, and to get the live feed was actually pretty easy as we set almost everything up. <br>
+All that needed to be done was to wire <code>nginx</code> to the local <code>motion</code> feed and get to it with the previously set <code>noip.com</code> address. </p>
+
+<p>Last thing I want to do is to be able to speak with my dog (he doesn't have to answer). That's my next task. I'm considering to use <a href="http://www.html5rocks.com/en/tutorials/getusermedia/intro/">HTML5 microphone support</a> to send the data to the Raspberry and to play it immediately after it receives it. Any ideas?</p>
+
+<p>Noam.</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="../author/noam-shemesh/" style="background-image: url(http://www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404)"><span class="hidden">Noam Shemesh's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="../author/noam-shemesh/">Noam Shemesh</a></h4>
+
+                    <p>10 years of programming experience, and still love it.
+Currently live in Tel Aviv.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">Tel Aviv</span>
+                    <span class="author-link icon-link"><a href="http://noamsh.com/about">http://noamsh.com/about</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=IoT%20Part%201%20-%20Raspberry%2C%20Dog%2C%20Spy&amp;url=http://noamsh.com/iot-part-1-raspberry-dog-spy/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://noamsh.com/iot-part-1-raspberry-dog-spy/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://noamsh.com/iot-part-1-raspberry-dog-spy/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+	
+	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'noamsh'; // required: replace example with your forum shortname
+    var disqus_identifier = '';
+ 
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a> 
+
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story prev no-cover" href="../javascript-integration-tests-coverage-with-istanbul/">
+        <section class="post">
+            <h2>Javascript Integration Tests Coverage with Istanbul</h2>
+            <p>We've all heard about the importance of tests. Especially in javascript when even a minor code refactoring is becoming…</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="http://noamsh.com">My Life as a Developer</a> © 2016</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-52398580-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=1be091d797"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=1be091d797"></script>
+
+</body>
