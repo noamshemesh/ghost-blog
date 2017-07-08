@@ -12,11 +12,12 @@ Currently live in Tel Aviv.">
 
     <link rel="shortcut icon" href="../../favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="../../assets/css/screen.css?v=052e489564">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+    <link rel="stylesheet" type="text/css" href="../../assets/css/screen.css?v=a8647422a8">
+
 
     <link rel="canonical" href="http://noamsh.com/author/noam-shemesh/">
-    <meta name="referrer" content="origin">
+    <meta name="referrer" content="no-referrer-when-downgrade">
     <link rel="next" href="http://noamsh.com/author/noam-shemesh/page/2/">
     
     <meta property="og:site_name" content="My Life as a Developer">
@@ -25,7 +26,7 @@ Currently live in Tel Aviv.">
     <meta property="og:description" content="10 years of programming experience, and still love it.
 Currently live in Tel Aviv.">
     <meta property="og:url" content="http://noamsh.com/author/noam-shemesh/">
-    
+    <meta property="article:modified_time" content="2017-07-08T12:21:27.000Z">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Noam Shemesh - Page 1 - My Life as a Developer">
     <meta name="twitter:description" content="10 years of programming experience, and still love it.
@@ -34,17 +35,22 @@ Currently live in Tel Aviv.">
     
     <script type="application/ld+json">
 {
-    "@context": "http://schema.org",
+    "@context": "https://schema.org",
     "@type": "Person",
-    "sameAs": "http://noamsh.com/about",
-    "publisher": "My Life as a Developer",
+    "sameAs": [
+        "http://noamsh.com/about"
+    ],
     "name": "Noam Shemesh",
-    "url": "http://noamsh.com/author/noam-shemesh",
+    "url": "http://noamsh.com/author/noam-shemesh/",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://noamsh.com"
+    },
     "description": "10 years of programming experience, and still love it.\nCurrently live in Tel Aviv."
 }
     </script>
 
-    <meta name="generator" content="Ghost 0.7">
+    <meta name="generator" content="Ghost 0.11">
     <link rel="alternate" type="application/rss+xml" title="My Life as a Developer" href="http://noamsh.com/rss/">
 </head>
 <body class="author-template author-noam-shemesh nav-closed">
@@ -55,9 +61,10 @@ Currently live in Tel Aviv.">
         <span class="hidden">Close</span>
     </a>
     <ul>
-            <li class="nav-home" role="presentation"><a href="http://noamsh.com/">Home</a></li>
-            <li class="nav-about" role="presentation"><a href="http://noamsh.com/about">About</a></li>
+            <li class="nav-home"><a href="http://noamsh.com/">Home</a></li>
+            <li class="nav-about"><a href="http://noamsh.com/about">About</a></li>
     </ul>
+        <a class="subscribe-button icon-feed" href="http://noamsh.com/rss/">Subscribe</a>
 </div>
 <span class="nav-cover"></span>
 
@@ -75,7 +82,7 @@ Currently live in Tel Aviv.">
 
     <section class="author-profile inner">
         <figure class="author-image">
-            <div class="img" style="background-image: url(http://www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404)"><span class="hidden">Noam Shemesh's Picture</span></div>
+            <div class="img" style="background-image: url(http://www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d&amp;)"><span class="hidden">Noam Shemesh's Picture</span></div>
         </figure>
         <h1 class="author-title">Noam Shemesh</h1>
             <h2 class="author-bio">10 years of programming experience, and still love it.
@@ -83,7 +90,7 @@ Currently live in Tel Aviv.</h2>
         <div class="author-meta">
             <span class="author-location icon-location">Tel Aviv</span>
             <span class="author-link icon-link"><a href="http://noamsh.com/about">http://noamsh.com/about</a></span>
-            <span class="author-stats"><i class="icon-stats"></i> 9 posts</span>
+            <span class="author-stats"><i class="icon-stats"></i> 10 posts</span>
         </div>
     </section>
 
@@ -92,10 +99,25 @@ Currently live in Tel Aviv.</h2>
     <div class="extra-pagination inner">
     <nav class="pagination" role="navigation">
     <span class="page-number">Page 1 of 2</span>
-        <a class="older-posts" href="page/2/">Older Posts →</a>
+        <a class="older-posts" href="page/2/">Older Posts <span aria-hidden="true">→</span></a>
 </nav>
+
 </div>
 
+<article class="post tag-pet-projects tag-react tag-firebase">
+    <header class="post-header">
+        <h2 class="post-title"><a href="../../cravd-save-food-places/">Cravd - Save Food Places</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p>After a while I decided to go public with Cravd [pronounced: krāv, just like craved] I've been using for more than a year. The basic idea <a class="read-more" href="../../cravd-save-food-places/">»</a></p>
+    </section>
+    <footer class="post-meta">
+        <img class="author-thumb" src="http://www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404" alt="Noam Shemesh" nopin="nopin">
+        <a href="index.html">Noam Shemesh</a>
+         on <a href="../../tag/pet-projects/">Pet Projects</a>, <a href="../../tag/react/">React</a>, <a href="../../tag/firebase/">Firebase</a>
+        <time class="post-date" datetime="2017-07-08">08 July 2017</time>
+    </footer>
+</article>
 <article class="post">
     <header class="post-header">
         <h2 class="post-title"><a href="../../iot-part-2-and-there-shall-be-light-the-smartphone-said/">IoT Part 2 - And There Shall be Light (the smartphone said)</a></h2>
@@ -152,36 +174,24 @@ Currently live in Tel Aviv.</h2>
         <time class="post-date" datetime="2014-06-13">13 June 2014</time>
     </footer>
 </article>
-<article class="post">
-    <header class="post-header">
-        <h2 class="post-title"><a href="../../sqlite-dal-for-android/">SQLite DAL for Android</a></h2>
-    </header>
-    <section class="post-excerpt">
-        <p>While developing for Android I had this feeling that something was missing. In Java, most of the time we use a DAL layer (aka JPA, Hibernate) <a class="read-more" href="../../sqlite-dal-for-android/">»</a></p>
-    </section>
-    <footer class="post-meta">
-        <img class="author-thumb" src="http://www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404" alt="Noam Shemesh" nopin="nopin">
-        <a href="index.html">Noam Shemesh</a>
-        
-        <time class="post-date" datetime="2014-01-04">04 January 2014</time>
-    </footer>
-</article>
 
 <nav class="pagination" role="navigation">
     <span class="page-number">Page 1 of 2</span>
-        <a class="older-posts" href="page/2/">Older Posts →</a>
+        <a class="older-posts" href="page/2/">Older Posts <span aria-hidden="true">→</span></a>
 </nav>
+
 
 </main>
 
 
         <footer class="site-footer clearfix">
-            <section class="copyright"><a href="http://noamsh.com">My Life as a Developer</a> © 2016</section>
+            <section class="copyright"><a href="http://noamsh.com">My Life as a Developer</a> © 2017</section>
             <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
         </footer>
 
     </div>
 
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
     <!-- You can safely delete this line if your theme does not require jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
@@ -195,9 +205,7 @@ Currently live in Tel Aviv.</h2>
   ga('send', 'pageview');
 
 </script>
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="../../assets/js/jquery.fitvids.js?v=052e489564"></script>
-    <script type="text/javascript" src="../../assets/js/index.js?v=052e489564"></script>
+    <script type="text/javascript" src="../../assets/js/jquery.fitvids.js?v=a8647422a8"></script>
+    <script type="text/javascript" src="../../assets/js/index.js?v=a8647422a8"></script>
 
 </body>

@@ -11,47 +11,65 @@
 
     <link rel="shortcut icon" href="../favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=052e489564">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=a8647422a8">
+
 
     <link rel="canonical" href="http://noamsh.com/login-and-cookies-on-android/">
-    <meta name="referrer" content="origin">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://noamsh.com/login-and-cookies-on-android/amp/">
     
     <meta property="og:site_name" content="My Life as a Developer">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Login and Cookies on Android">
-    <meta property="og:description" content="If you ever tried to work with cookies and Android you know that it isn't covered well over the net. The log-in screen, however, is more covered, there are many templates all over the net, but we couldn't find a...">
+    <meta property="og:description" content="If you ever tried to work with cookies and Android you know that it isn't covered well over the net. The log-in screen, however, is more covered, there are many templates all over the net, but we couldn't find a template that covers the flow from A to Z, with">
     <meta property="og:url" content="http://noamsh.com/login-and-cookies-on-android/">
     <meta property="article:published_time" content="2013-08-30T08:44:00.000Z">
-    <meta property="article:modified_time" content="2015-10-27T21:02:18.059Z">
-    
+    <meta property="article:modified_time" content="2015-10-27T21:02:18.000Z">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Login and Cookies on Android">
-    <meta name="twitter:description" content="If you ever tried to work with cookies and Android you know that it isn't covered well over the net. The log-in screen, however, is more covered, there are many templates all over the net, but we couldn't find a...">
+    <meta name="twitter:description" content="If you ever tried to work with cookies and Android you know that it isn't covered well over the net. The log-in screen, however, is more covered, there are many templates all over the net, but we couldn't find a template that covers the flow from A to Z, with">
     <meta name="twitter:url" content="http://noamsh.com/login-and-cookies-on-android/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Noam Shemesh">
     
     <script type="application/ld+json">
 {
-    "@context": "http://schema.org",
+    "@context": "https://schema.org",
     "@type": "Article",
-    "publisher": "My Life as a Developer",
+    "publisher": {
+        "@type": "Organization",
+        "name": "My Life as a Developer",
+        "logo": "http://noamsh.com/ghost/img/ghosticon.jpg"
+    },
     "author": {
         "@type": "Person",
         "name": "Noam Shemesh",
-        "image": "//www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404",
-        "url": "http://noamsh.com/author/noam-shemesh",
-        "sameAs": "http://noamsh.com/about",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404",
+            "width": 80,
+            "height": 80
+        },
+        "url": "http://noamsh.com/author/noam-shemesh/",
+        "sameAs": [
+            "http://noamsh.com/about"
+        ],
         "description": "10 years of programming experience, and still love it.\nCurrently live in Tel Aviv."
     },
     "headline": "Login and Cookies on Android",
     "url": "http://noamsh.com/login-and-cookies-on-android/",
     "datePublished": "2013-08-30T08:44:00.000Z",
-    "dateModified": "2015-10-27T21:02:18.059Z",
-    "description": "If you ever tried to work with cookies and Android you know that it isn&#x27;t covered well over the net. The log-in screen, however, is more covered, there are many templates all over the net, but we couldn&#x27;t find a..."
+    "dateModified": "2015-10-27T21:02:18.000Z",
+    "description": "If you ever tried to work with cookies and Android you know that it isn&#x27;t covered well over the net. The log-in screen, however, is more covered, there are many templates all over the net, but we couldn&#x27;t find a template that covers the flow from A to Z, with",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://noamsh.com"
+    }
 }
     </script>
 
-    <meta name="generator" content="Ghost 0.7">
+    <meta name="generator" content="Ghost 0.11">
     <link rel="alternate" type="application/rss+xml" title="My Life as a Developer" href="http://noamsh.com/rss/">
 </head>
 <body class="post-template nav-closed">
@@ -62,9 +80,10 @@
         <span class="hidden">Close</span>
     </a>
     <ul>
-            <li class="nav-home" role="presentation"><a href="http://noamsh.com/">Home</a></li>
-            <li class="nav-about" role="presentation"><a href="http://noamsh.com/about">About</a></li>
+            <li class="nav-home"><a href="http://noamsh.com/">Home</a></li>
+            <li class="nav-about"><a href="http://noamsh.com/about">About</a></li>
     </ul>
+        <a class="subscribe-button icon-feed" href="http://noamsh.com/rss/">Subscribe</a>
 </div>
 <span class="nav-cover"></span>
 
@@ -276,7 +295,7 @@ httpClient.setCookieStore(cookieStore);
 
 
             <figure class="author-image">
-                <a class="img" href="../author/noam-shemesh/" style="background-image: url(http://www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d=404)"><span class="hidden">Noam Shemesh's Picture</span></a>
+                <a class="img" href="../author/noam-shemesh/" style="background-image: url(http://www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d&amp;)"><span class="hidden">Noam Shemesh's Picture</span></a>
             </figure>
 
             <section class="author">
@@ -303,24 +322,27 @@ Currently live in Tel Aviv.</p>
                     <span class="hidden">Google+</span>
                 </a>
             </section>
-	
-	<div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_shortname = 'noamsh'; // required: replace example with your forum shortname
-    var disqus_identifier = '';
- 
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-	<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a> 
 
 
         </footer>
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+      this.page.url = 'http://noamsh.com/login-and-cookies-on-android/';
+      this.page.identifier = 'ghost-6';
+    };
+
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = 'https://noamsh.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
     </article>
 </main>
@@ -343,12 +365,13 @@ Currently live in Tel Aviv.</p>
 
 
         <footer class="site-footer clearfix">
-            <section class="copyright"><a href="http://noamsh.com">My Life as a Developer</a> © 2016</section>
+            <section class="copyright"><a href="http://noamsh.com">My Life as a Developer</a> © 2017</section>
             <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
         </footer>
 
     </div>
 
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
     <!-- You can safely delete this line if your theme does not require jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
@@ -362,9 +385,7 @@ Currently live in Tel Aviv.</p>
   ga('send', 'pageview');
 
 </script>
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=052e489564"></script>
-    <script type="text/javascript" src="../assets/js/index.js?v=052e489564"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=a8647422a8"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=a8647422a8"></script>
 
 </body>
