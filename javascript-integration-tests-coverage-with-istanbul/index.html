@@ -11,25 +11,25 @@
 
     <link rel="shortcut icon" href="../favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
-    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=a8647422a8">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=cf44b072e4">
 
 
-    <link rel="canonical" href="http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/">
+    <link rel="canonical" href="https://noamsh.com/javascript-integration-tests-coverage-with-istanbul/">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <link rel="amphtml" href="http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/amp/">
+    <link rel="amphtml" href="https://noamsh.com/javascript-integration-tests-coverage-with-istanbul/amp/">
     
     <meta property="og:site_name" content="My Life as a Developer">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Javascript Integration Tests Coverage with Istanbul">
     <meta property="og:description" content="We've all heard about the importance of tests. Especially in javascript when even a minor code refactoring is becoming an issue because of the dynamic nature of the language. But even if the project has a lot of tests, we're not sure if every line in the code is covered.">
-    <meta property="og:url" content="http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/">
+    <meta property="og:url" content="https://noamsh.com/javascript-integration-tests-coverage-with-istanbul/">
     <meta property="article:published_time" content="2014-07-05T11:20:00.000Z">
     <meta property="article:modified_time" content="2015-10-27T21:01:44.000Z">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Javascript Integration Tests Coverage with Istanbul">
     <meta name="twitter:description" content="We've all heard about the importance of tests. Especially in javascript when even a minor code refactoring is becoming an issue because of the dynamic nature of the language. But even if the project has a lot of tests, we're not sure if every line in the code is covered.">
-    <meta name="twitter:url" content="http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/">
+    <meta name="twitter:url" content="https://noamsh.com/javascript-integration-tests-coverage-with-istanbul/">
     <meta name="twitter:label1" content="Written by">
     <meta name="twitter:data1" content="Noam Shemesh">
     
@@ -40,7 +40,7 @@
     "publisher": {
         "@type": "Organization",
         "name": "My Life as a Developer",
-        "logo": "http://noamsh.com/ghost/img/ghosticon.jpg"
+        "logo": "https://noamsh.com/ghost/img/ghosticon.jpg"
     },
     "author": {
         "@type": "Person",
@@ -51,26 +51,26 @@
             "width": 80,
             "height": 80
         },
-        "url": "http://noamsh.com/author/noam-shemesh/",
+        "url": "https://noamsh.com/author/noam-shemesh/",
         "sameAs": [
-            "http://noamsh.com/about"
+            "https://noamsh.com/about"
         ],
         "description": "10 years of programming experience, and still love it.\nCurrently live in Tel Aviv."
     },
     "headline": "Javascript Integration Tests Coverage with Istanbul",
-    "url": "http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/",
+    "url": "https://noamsh.com/javascript-integration-tests-coverage-with-istanbul/",
     "datePublished": "2014-07-05T11:20:00.000Z",
     "dateModified": "2015-10-27T21:01:44.000Z",
     "description": "We&#x27;ve all heard about the importance of tests. Especially in javascript when even a minor code refactoring is becoming an issue because of the dynamic nature of the language. But even if the project has a lot of tests, we&#x27;re not sure if every line in the code is covered.",
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "http://noamsh.com"
+        "@id": "https://noamsh.com"
     }
 }
     </script>
 
     <meta name="generator" content="Ghost 0.11">
-    <link rel="alternate" type="application/rss+xml" title="My Life as a Developer" href="http://noamsh.com/rss/">
+    <link rel="alternate" type="application/rss+xml" title="My Life as a Developer" href="https://noamsh.com/rss/">
 </head>
 <body class="post-template nav-closed">
 
@@ -80,10 +80,10 @@
         <span class="hidden">Close</span>
     </a>
     <ul>
-            <li class="nav-home"><a href="http://noamsh.com/">Home</a></li>
-            <li class="nav-about"><a href="http://noamsh.com/about">About</a></li>
+            <li class="nav-home"><a href="https://noamsh.com/">Home</a></li>
+            <li class="nav-about"><a href="https://noamsh.com/about">About</a></li>
     </ul>
-        <a class="subscribe-button icon-feed" href="http://noamsh.com/rss/">Subscribe</a>
+        <a class="subscribe-button icon-feed" href="https://noamsh.com/rss/">Subscribe</a>
 </div>
 <span class="nav-cover"></span>
 
@@ -115,7 +115,7 @@
 
 <p>But even if the project has a lot of tests, we're not sure if every line in the code is covered. That's where coverage tools come in handy.</p>
 
-<p>What is the problem then? While running coverage for unit tests is pretty easy and works out of the box (e.g. <a href="http://blanketjs.org" title="Blanket.js">blanket.js</a>), coverage for integration tests is a bit harder, because the tool doesn't know what is the code that is being tested.</p>
+<p>What is the problem then? While running coverage for unit tests is pretty easy and works out of the box (e.g. <a href="https://blanketjs.org" title="Blanket.js">blanket.js</a>), coverage for integration tests is a bit harder, because the tool doesn't know what is the code that is being tested.</p>
 
 <p><!--more-->It took me a few hours to realize that <a href="https://github.com/gotwarlost/istanbul" title="istanbul">Istanbul</a> already solved this problem, they are giving the option to instrument code, although the documentation about this feature is pretty shallow. Maybe this post will help if you encounter the same issue.</p>
 
@@ -151,7 +151,7 @@ Noam.</p>
 
 
             <figure class="author-image">
-                <a class="img" href="../author/noam-shemesh/" style="background-image: url(http://www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d&amp;)"><span class="hidden">Noam Shemesh's Picture</span></a>
+                <a class="img" href="../author/noam-shemesh/" style="background-image: url(https://www.gravatar.com/avatar/b56d61eccf5108fa9cd1a97a692fb1bd?d&amp;)"><span class="hidden">Noam Shemesh's Picture</span></a>
             </figure>
 
             <section class="author">
@@ -161,20 +161,20 @@ Noam.</p>
 Currently live in Tel Aviv.</p>
                 <div class="author-meta">
                     <span class="author-location icon-location">Tel Aviv</span>
-                    <span class="author-link icon-link"><a href="http://noamsh.com/about">http://noamsh.com/about</a></span>
+                    <span class="author-link icon-link"><a href="https://noamsh.com/about">https://noamsh.com/about</a></span>
                 </div>
             </section>
 
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=Javascript%20Integration%20Tests%20Coverage%20with%20Istanbul&amp;url=http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=Javascript%20Integration%20Tests%20Coverage%20with%20Istanbul&amp;url=https://noamsh.com/javascript-integration-tests-coverage-with-istanbul/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://noamsh.com/javascript-integration-tests-coverage-with-istanbul/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https://noamsh.com/javascript-integration-tests-coverage-with-istanbul/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <span class="hidden">Google+</span>
                 </a>
             </section>
@@ -185,7 +185,7 @@ Currently live in Tel Aviv.</p>
 <div id="disqus_thread"></div>
 <script>
     var disqus_config = function () {
-      this.page.url = 'http://noamsh.com/javascript-integration-tests-coverage-with-istanbul/';
+      this.page.url = 'https://noamsh.com/javascript-integration-tests-coverage-with-istanbul/';
       this.page.identifier = 'ghost-2';
     };
 
@@ -221,13 +221,13 @@ Currently live in Tel Aviv.</p>
 
 
         <footer class="site-footer clearfix">
-            <section class="copyright"><a href="http://noamsh.com">My Life as a Developer</a> © 2017</section>
+            <section class="copyright"><a href="https://noamsh.com">My Life as a Developer</a> © 2017</section>
             <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
         </footer>
 
     </div>
 
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     <!-- You can safely delete this line if your theme does not require jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
@@ -241,7 +241,7 @@ Currently live in Tel Aviv.</p>
   ga('send', 'pageview');
 
 </script>
-    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=a8647422a8"></script>
-    <script type="text/javascript" src="../assets/js/index.js?v=a8647422a8"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=cf44b072e4"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=cf44b072e4"></script>
 
 </body>
